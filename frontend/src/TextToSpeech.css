@@ -1,0 +1,25 @@
+.tts-btn {
+  padding: 0.5rem 1rem;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  margin-right: 0.5rem;
+}
+
+.tts-btn.speaking {
+  animation: soundWave 1s infinite;
+  background: #ff9800;
+}
+
+@keyframes soundWave {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.tts-btn:hover {
+  transform: translateY(-2px);
+}

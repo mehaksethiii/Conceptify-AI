@@ -1,0 +1,45 @@
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  z-index: 1000;
+}
+
+.dark-mode-toggle:hover {
+  transform: scale(1.1);
+}
+
+body.dark-mode {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+body.dark-mode .app {
+  color: #fff;
+}
+
+body.dark-mode form,
+body.dark-mode .response {
+  background: #2a2a3e;
+  color: #fff;
+}
+
+body.dark-mode textarea,
+body.dark-mode select,
+body.dark-mode input[type="file"] {
+  background: #1a1a2e;
+  color: #fff;
+  border-color: #444;
+}
+
+body.dark-mode .response h2 {
+  color: #8b9aff;
+}

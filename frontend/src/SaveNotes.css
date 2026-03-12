@@ -1,0 +1,31 @@
+.save-note-btn {
+  padding: 0.5rem 1rem;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  margin-right: 0.5rem;
+}
+
+.save-note-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: #45a049;
+}
+
+.save-note-btn.saved {
+  background: #2196f3;
+  animation: saveSuccess 0.5s ease;
+}
+
+@keyframes saveSuccess {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.save-note-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
