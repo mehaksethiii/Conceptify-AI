@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Login from './Login';
+import LandingPage from './LandingPage';
 import DarkModeToggle from './DarkMode';
 import VoiceInput from './VoiceInput';
 import TextToSpeech from './TextToSpeech';
@@ -9,6 +10,10 @@ import ShareButton from './ShareButton';
 import Dashboard from './Dashboard';
 import { History } from './History';
 import './App.css';
+
+// Set API base URL from environment variable or default to localhost
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+axios.defaults.baseURL = API_URL;
 
 // Set axios default authorization header
 axios.interceptors.request.use((config) => {
@@ -20,6 +25,7 @@ axios.interceptors.request.use((config) => {
 });
 
 function App() {
+  const [showLanding, setShowLanding] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [doubt, setDoubt] = useState('');
@@ -38,6 +44,7 @@ function App() {
     if (token && savedUser) {
       setIsAuthenticated(true);
       setUser(JSON.parse(savedUser));
+      setShowLanding(false);
     }
     
     // Load history
@@ -45,9 +52,14 @@ function App() {
     setHistoryData(saved);
   }, []);
 
+  const handleGetStarted = () => {
+    setShowLanding(false);
+  };
+
   const handleLogin = (userData, token) => {
     setIsAuthenticated(true);
     setUser(userData);
+    setShowLanding(false);
   };
 
   const handleLogout = () => {
@@ -56,6 +68,7 @@ function App() {
     setIsAuthenticated(false);
     setUser(null);
     setResponse(null);
+    setShowLanding(true);
   };
 
   const saveToHistory = (doubt, level, response) => {
@@ -120,6 +133,10 @@ function App() {
     setLevel(item.level);
     setResponse(item.response);
   };
+
+  if (showLanding) {
+    return <LandingPage onGetStarted={handleGetStarted} />;
+  }
 
   if (!isAuthenticated) {
     return <Login onLogin={handleLogin} />;
