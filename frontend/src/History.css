@@ -32,11 +32,17 @@
   z-index: 999;
   overflow-y: auto;
   animation: slideIn 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes slideIn {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 .history-header {
@@ -71,15 +77,18 @@
   justify-content: space-between;
   padding: 1rem;
   margin-bottom: 0.5rem;
-  background: #f9f9f9;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .history-item:hover {
-  background: #f0f0f0;
+  background: rgba(255, 255, 255, 0.6);
   transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .history-content {
@@ -158,8 +167,10 @@ body.dark-mode .history-doubt {
   align-items: center;
   margin-bottom: 1rem;
   padding: 0.75rem;
-  background: #f8f9fa;
-  border-radius: 8px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: 12px;
 }
 
 .clear-all-btn {
@@ -194,17 +205,19 @@ body.dark-mode .history-doubt {
   justify-content: space-between;
   align-items: flex-start;
   padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   border-left: 3px solid transparent;
 }
 
 .history-item-inline:hover {
-  background: #e9ecef;
-  border-left-color: #667eea;
+  background: rgba(255, 255, 255, 0.6);
+  border-left-color: var(--color-dark);
   transform: translateX(3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .history-content-inline {
@@ -221,6 +234,7 @@ body.dark-mode .history-doubt {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
@@ -233,13 +247,14 @@ body.dark-mode .history-doubt {
 }
 
 .history-level-inline {
-  background: #667eea;
-  color: white;
+  background: var(--color-dark);
+  color: var(--color-light);
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
   display: inline-block;
   width: fit-content;
   font-size: 0.75rem;
+  font-family: var(--font-heading);
 }
 
 .history-time-inline {
@@ -284,4 +299,11 @@ body.dark-mode .history-doubt {
   color: #999;
   padding: 3rem 1rem;
   font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .history-panel {
+    width: 100%;
+  }
 }

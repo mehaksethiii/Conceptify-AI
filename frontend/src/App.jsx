@@ -9,6 +9,7 @@ import DifficultyMeter from './DifficultyMeter';
 import ShareButton from './ShareButton';
 import Dashboard from './Dashboard';
 import { History } from './History';
+import CursorPetals from './CursorPetals';
 import './App.css';
 
 // Set API base URL from environment variable or default to localhost
@@ -46,7 +47,7 @@ function App() {
       setUser(JSON.parse(savedUser));
       setShowLanding(false);
     }
-    
+
     // Load history
     const saved = JSON.parse(localStorage.getItem('doubtHistory') || '[]');
     setHistoryData(saved);
@@ -89,7 +90,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
       const formData = new FormData();
       formData.append('doubt', doubt);
@@ -103,14 +104,14 @@ function App() {
       });
       setResponse(data);
       saveToHistory(doubt, level, data);
-      
+
       // Also save to S3 (cloud backup)
       await axios.post('/api/save-history', {
         doubt,
         level,
         response: data
       }).catch(() => console.log('Cloud backup skipped'));
-      
+
     } catch (error) {
       console.error('Error:', error);
       if (error.response?.status === 401) {
@@ -135,17 +136,27 @@ function App() {
   };
 
   if (showLanding) {
-    return <LandingPage onGetStarted={handleGetStarted} />;
+    return (
+      <>
+        <CursorPetals />
+        <LandingPage onGetStarted={handleGetStarted} />
+      </>
+    );
   }
 
   if (!isAuthenticated) {
-    return <Login onLogin={handleLogin} />;
+    return (
+      <>
+        <CursorPetals />
+        <Login onLogin={handleLogin} onBack={() => setShowLanding(true)} />
+      </>
+    );
   }
 
   return (
     <>
+      <CursorPetals />
       <DarkModeToggle />
-      
       <div className="app">
         <header>
           <div className="header-content">
@@ -159,15 +170,15 @@ function App() {
             </div>
           </div>
           <div className="nav-buttons">
-            <button 
-              onClick={() => setShowHistory(!showHistory)} 
+            <button
+              onClick={() => setShowHistory(!showHistory)}
               className="nav-btn"
               type="button"
             >
               📚 History
             </button>
-            <button 
-              onClick={() => setShowDashboard(!showDashboard)} 
+            <button
+              onClick={() => setShowDashboard(!showDashboard)}
               className="nav-btn"
               type="button"
             >
@@ -182,9 +193,9 @@ function App() {
               <h3>📚 Your Learning History ({historyData.length})</h3>
               <button onClick={() => setShowHistory(false)} className="close-btn">✕</button>
             </div>
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
               gap: '1rem',
               maxHeight: '500px',
               overflowY: 'auto'
@@ -195,30 +206,15 @@ function App() {
                 </p>
               ) : (
                 historyData.map(item => (
-                  <div 
+                  <div
                     key={item.id}
+                    className="history-grid-item"
                     onClick={() => {
                       handleHistorySelect(item);
                       setShowHistory(false);
                     }}
-                    style={{
-                      background: '#f8f9fa',
-                      padding: '1rem',
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      borderLeft: '3px solid transparent',
-                      transition: 'all 0.3s'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderLeftColor = '#667eea';
-                      e.currentTarget.style.background = '#e9ecef';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderLeftColor = 'transparent';
-                      e.currentTarget.style.background = '#f8f9fa';
-                    }}
                   >
-                    <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#333', fontSize: '0.95rem' }}>
+                    <div className="history-grid-doubt">
                       {item.doubt}
                     </div>
                     <div style={{ fontSize: '0.85rem', color: '#666', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
@@ -254,57 +250,64 @@ function App() {
           </div>
         )}
 
-        <DifficultyMeter level={level} />
+        <div className="bento-grid">
+          <form className="bento-panel main-form" onSubmit={handleSubmit}>
+            <textarea
+              value={doubt}
+              onChange={(e) => setDoubt(e.target.value)}
+              placeholder="Enter your doubt... (e.g., Explain stack overflow in simple way)"
+              required
+            />
 
-        <form onSubmit={handleSubmit}>
-          <VoiceInput onTranscript={handleVoiceTranscript} />
-          
-          <textarea
-            value={doubt}
-            onChange={(e) => setDoubt(e.target.value)}
-            placeholder="Enter your doubt... (e.g., Explain stack overflow in simple way)"
-            required
-          />
-          
-          <select value={level} onChange={(e) => setLevel(e.target.value)}>
-            <optgroup label="School Level">
-              <option value="Nursery/KG">Nursery/KG (Age 3-5)</option>
-              <option value="Class 1-2">Class 1-2 (Primary)</option>
-              <option value="Class 3-5">Class 3-5 (Elementary)</option>
-              <option value="Class 6-8">Class 6-8 (Middle School)</option>
-              <option value="Class 9-10">Class 9-10 (High School)</option>
-              <option value="Class 11-12">Class 11-12 (Senior Secondary)</option>
-            </optgroup>
-            <optgroup label="College/University">
-              <option value="Undergraduate">Undergraduate (BSc/BA/BCom)</option>
-              <option value="Engineering">Engineering (BTech/BE)</option>
-              <option value="Medical">Medical (MBBS/BDS)</option>
-              <option value="Postgraduate">Postgraduate (MSc/MA/MBA)</option>
-            </optgroup>
-            <optgroup label="Competitive Exams">
-              <option value="JEE/NEET">JEE/NEET Preparation</option>
-              <option value="UPSC/SSC">UPSC/SSC/Banking</option>
-              <option value="GRE/GMAT">GRE/GMAT/CAT</option>
-            </optgroup>
-            <optgroup label="Professional">
-              <option value="Working Professional">Working Professional</option>
-              <option value="Research Scholar">Research Scholar/PhD</option>
-            </optgroup>
-          </select>
+            <select value={level} onChange={(e) => setLevel(e.target.value)}>
+              <optgroup label="School Level">
+                <option value="Nursery/KG">Nursery/KG (Age 3-5)</option>
+                <option value="Class 1-2">Class 1-2 (Primary)</option>
+                <option value="Class 3-5">Class 3-5 (Elementary)</option>
+                <option value="Class 6-8">Class 6-8 (Middle School)</option>
+                <option value="Class 9-10">Class 9-10 (High School)</option>
+                <option value="Class 11-12">Class 11-12 (Senior Secondary)</option>
+              </optgroup>
+              <optgroup label="College/University">
+                <option value="Undergraduate">Undergraduate (BSc/BA/BCom)</option>
+                <option value="Engineering">Engineering (BTech/BE)</option>
+                <option value="Medical">Medical (MBBS/BDS)</option>
+                <option value="Postgraduate">Postgraduate (MSc/MA/MBA)</option>
+              </optgroup>
+              <optgroup label="Competitive Exams">
+                <option value="JEE/NEET">JEE/NEET Preparation</option>
+                <option value="UPSC/SSC">UPSC/SSC/Banking</option>
+                <option value="GRE/GMAT">GRE/GMAT/CAT</option>
+              </optgroup>
+              <optgroup label="Professional">
+                <option value="Working Professional">Working Professional</option>
+                <option value="Research Scholar">Research Scholar/PhD</option>
+              </optgroup>
+            </select>
 
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
 
-          <button type="submit" disabled={loading}>
-            {loading ? 'Generating...' : 'Get Explanation'}
-          </button>
-        </form>
+            <button type="submit" disabled={loading}>
+              {loading ? 'Generating...' : 'Get Explanation'}
+            </button>
+          </form>
+
+          <div className="side-panel">
+            <div className="bento-panel" style={{ padding: '1rem' }}>
+              <VoiceInput onTranscript={handleVoiceTranscript} />
+            </div>
+            <div className="bento-panel" style={{ padding: '1rem' }}>
+              <DifficultyMeter level={level} />
+            </div>
+          </div>
+        </div>
 
         {response && (
-          <div className="response">
+          <div className="response bento-panel">
             <div className="response-actions">
               <TextToSpeech text={`${response.explanation}. ${response.analogy}`} />
               <ShareButton doubt={doubt} response={response} />

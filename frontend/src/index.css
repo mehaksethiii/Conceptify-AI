@@ -1,5 +1,100 @@
+:root {
+  /* Muted Candy Palette */
+  --color-mint: #E1F2E8;
+  --color-lavender: #E6E1FA;
+  --color-apricot: #FDE8DE;
+  --color-dark: #1A1A1A;
+  --color-light: #F8F9FA;
+
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+  --glass-blur: blur(20px);
+  --radius-bento: 32px;
+
+  /* Typography Variables */
+  --font-heading: 'Archivo Narrow', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-body);
+  color: var(--color-dark);
+  position: relative;
+  min-height: 100vh;
+  /* Cloud Pattern Background */
+  background-image: url('/bg_pastel_clouds.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+@keyframes meshAnim {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  50% {
+    background-position: 100% 100%;
+  }
+
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  font-weight: 700;
+  margin: 0;
+}
+
+p,
+span,
+div,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+}
+
+/* Global Hover Pop-up effect for text and interactive elements with pointer */
+button,
+a,
+.footer-section li,
+.nav-links a,
+.history-item,
+.history-item-inline,
+.demo-btn,
+.logout-btn,
+.get-started-btn {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s, background-color 0.3s;
+}
+
+button:hover:not(:disabled),
+a:hover,
+.footer-section li:hover,
+.nav-links a:hover,
+.demo-btn:hover:not(:disabled),
+.logout-btn:hover,
+.get-started-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Ensure these items don't jump too aggressively, keeping existing transforms if any */
+.history-item:hover,
+.history-item-inline:hover {
+  transform: translateX(5px) scale(1.02);
 }

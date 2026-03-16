@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import './Login.css';
 
-function Login({ onLogin }) {
+function Login({ onLogin, onBack }) {
   const [isLogin, setIsLogin] = useState(true);
   const [showQR, setShowQR] = useState(false);
   const [qrData, setQrData] = useState(null);
@@ -23,7 +23,7 @@ function Login({ onLogin }) {
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
       const { data } = await axios.post(endpoint, formData);
-      
+
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       onLogin(data.user, data.token);
@@ -42,7 +42,7 @@ function Login({ onLogin }) {
 
     setLoading(true);
     setError('');
-    
+
     try {
       // First login to get token
       const { data: loginData } = await axios.post('/api/auth/login', {
@@ -93,7 +93,7 @@ function Login({ onLogin }) {
         email: 'student@demo.com',
         password: 'demo123'
       });
-      
+
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       onLogin(data.user, data.token);
@@ -114,8 +114,8 @@ function Login({ onLogin }) {
           <div className="qr-section">
             <img src={qrData.qrCode} alt="QR Code" className="qr-image" />
             <p className="qr-instructions">
-              1. Open Google Authenticator app<br/>
-              2. Scan this QR code<br/>
+              1. Open Google Authenticator app<br />
+              2. Scan this QR code<br />
               3. Enter the 6-digit code below
             </p>
           </div>
@@ -148,19 +148,24 @@ function Login({ onLogin }) {
 
   return (
     <div className="login-container">
+      {onBack && (
+        <button className="login-back-btn" onClick={onBack}>
+          ← Back to Home
+        </button>
+      )}
       <div className="login-box">
         <h1>🔥 Conceptify AI</h1>
         <p className="subtitle">Doubt-to-Concept Visual Tutor</p>
 
         <div className="tabs">
-          <button 
-            className={isLogin ? 'active' : ''} 
+          <button
+            className={isLogin ? 'active' : ''}
             onClick={() => setIsLogin(true)}
           >
             Login
           </button>
-          <button 
-            className={!isLogin ? 'active' : ''} 
+          <button
+            className={!isLogin ? 'active' : ''}
             onClick={() => setIsLogin(false)}
           >
             Sign Up
@@ -173,24 +178,24 @@ function Login({ onLogin }) {
               type="text"
               placeholder="Full Name"
               value={formData.name}
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               required={!isLogin}
             />
           )}
-          
+
           <input
             type="email"
             placeholder="Email"
             value={formData.email}
-            onChange={(e) => setFormData({...formData, email: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             required
           />
-          
+
           <input
             type="password"
             placeholder="Password"
             value={formData.password}
-            onChange={(e) => setFormData({...formData, password: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             required
           />
 

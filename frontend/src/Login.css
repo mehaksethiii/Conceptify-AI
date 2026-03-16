@@ -1,26 +1,55 @@
+.login-back-btn {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  background: rgba(255, 255, 255, 0.5);
+  /* Make the button slightly more solid so it stands out */
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  color: var(--color-dark);
+  /* Dark text for light background */
+  padding: 0.8rem 1.5rem;
+  border-radius: 40px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: auto;
+  z-index: 100;
+}
+
+.login-back-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
 .login-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 2rem;
 }
 
 .login-box {
-  background: white;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: var(--radius-bento);
   padding: 3rem;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 100%;
 }
 
 .login-box h1 {
   text-align: center;
-  color: #667eea;
+  color: var(--color-dark);
   margin-bottom: 0.5rem;
   font-size: 2rem;
+  font-family: var(--font-heading);
 }
 
 .subtitle {
@@ -39,17 +68,19 @@
 .tabs button {
   flex: 1;
   padding: 0.75rem;
-  border: 2px solid #e0e0e0;
-  background: white;
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.3s;
+  color: var(--color-dark);
+  font-family: var(--font-heading);
 }
 
 .tabs button.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--color-dark);
+  color: var(--color-light);
   border-color: transparent;
 }
 
@@ -61,15 +92,18 @@
 
 .login-box input {
   padding: 1rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
   font-size: 1rem;
-  transition: border-color 0.3s;
+  transition: all 0.3s;
 }
 
 .login-box input:focus {
   outline: none;
-  border-color: #667eea;
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--color-lavender);
+  box-shadow: 0 0 0 3px rgba(230, 225, 250, 0.5);
 }
 
 .error {
@@ -83,18 +117,20 @@
 
 .login-box button[type="submit"] {
   padding: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--color-dark);
+  color: var(--color-light);
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 1.1rem;
   font-weight: 600;
+  font-family: var(--font-heading);
+  letter-spacing: 1px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .login-box button[type="submit"]:hover:not(:disabled) {
-  transform: translateY(-2px);
+  transform: translateY(-4px) scale(1.02);
 }
 
 .login-box button:disabled {
@@ -198,4 +234,15 @@
 
 .back-btn:hover {
   background: #f0f0f0;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 1.5rem;
+  }
+
+  .login-box h1 {
+    font-size: 1.6rem;
+  }
 }

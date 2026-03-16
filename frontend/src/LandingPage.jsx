@@ -7,6 +7,7 @@ function LandingPage({ onGetStarted }) {
 
   return (
     <div className="landing-page">
+
       {/* Navigation */}
       <nav className="landing-nav">
         <div className="nav-container">
@@ -21,23 +22,39 @@ function LandingPage({ onGetStarted }) {
         </div>
       </nav>
 
-      {/* Hero Section - Image First */}
-      <section className="hero-section" id="home">
-        <div className="hero-image-wrapper">
-          <img src={heroImage} alt="Conceptify AI Educational Platform" className="hero-image-full" />
+      {/* Hero Section */}
+      <section className="dv-hero-section" id="home">
+        <div className="dv-hero-content">
+
+          {/* Floating Assets */}
+          <img src="/asset_notepad.png" alt="Notepad and pencil" className="dv-asset dv-asset-notepad" />
+          <img src="/asset_paintbrush.png" alt="Paintbrush" className="dv-asset dv-asset-paintbrush" />
+          <img src="/asset_question.png" alt="Glowing question mark" className="dv-asset dv-asset-question" />
+          <img src="/asset_pencil.png" alt="Large Pencil" className="dv-asset dv-asset-main-pencil" />
+
+          <h1 className="dv-main-title">VISUALIZE</h1>
+
+          <div className="dv-hero-text">
+            <p className="dv-subtitle">EVERY <span className="italic-serif">doubt</span> NEEDS <span className="italic-serif">a picture</span></p>
+            <p className="dv-tagline">Transforming ambiguity into CLARITY</p>
+          </div>
+
+          <div className="dv-badge">
+            <svg viewBox="0 0 100 100" className="dv-badge-bg">
+              <polygon points="50,0 60,10 75,5 80,20 95,20 95,35 100,50 95,65 95,80 80,80 75,95 60,90 50,100 40,90 25,95 20,80 5,80 5,65 0,50 5,35 5,20 20,20 25,5 40,10" fill="#FF8C00" />
+            </svg>
+            <div className="dv-badge-content">
+              <span>CONCEPTIFY</span>
+              <strong>VISUAL<br />LEAGUE</strong>
+              <span>2026</span>
+              <div className="dv-badge-icons">📈 📊</div>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* Title Section - Below Image */}
-      <section className="hero-title-section">
-        <div className="hero-caption">
-          <h1 className="main-title">
-            <span className="title-conceptify">Conceptify</span>
-            <span className="title-ai"> AI</span>
-          </h1>
-          <p className="main-subtitle">Your Educational Tutor to Success</p>
-        </div>
-      </section>
+
 
       {/* Features Section */}
       <section className="features-section" id="features">
@@ -80,9 +97,9 @@ function LandingPage({ onGetStarted }) {
             <div className="step-label">User</div>
             <p className="step-description">Ask your question</p>
           </div>
-          
+
           <div className="workflow-arrow">→</div>
-          
+
           <div className="workflow-step">
             <div className="step-icon backend-icon">
               <img src="/backend.jpg" alt="Backend" className="workflow-icon-img" />
@@ -90,9 +107,9 @@ function LandingPage({ onGetStarted }) {
             <div className="step-label">Backend</div>
             <p className="step-description">Process with AI</p>
           </div>
-          
+
           <div className="workflow-arrow">→</div>
-          
+
           <div className="workflow-step">
             <div className="step-icon nova-icon">
               <img src="/nova.jpg" alt="Nova AI" className="workflow-icon-img" />
@@ -100,9 +117,9 @@ function LandingPage({ onGetStarted }) {
             <div className="step-label">Nova</div>
             <p className="step-description">Generate explanation</p>
           </div>
-          
+
           <div className="workflow-arrow">→</div>
-          
+
           <div className="workflow-step">
             <div className="step-icon response-icon">
               <img src="/response.jpg" alt="Response" className="workflow-icon-img" />
@@ -175,7 +192,7 @@ function LandingPage({ onGetStarted }) {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2024 Conceptify AI. Built with ❤️ for education.</p>
+          <p>© 2026 Conceptify AI. Built with ❤️ for education.</p>
         </div>
       </footer>
     </div>

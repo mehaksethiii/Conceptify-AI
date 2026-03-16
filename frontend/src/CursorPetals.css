@@ -1,0 +1,36 @@
+.cursor-petals-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.petal {
+    position: absolute;
+    /* Petal shape via border-radius */
+    border-radius: 50% 0 50% 50%;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    transform-origin: 50% 50%;
+    animation: fallAndFade 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    opacity: 0.8;
+}
+
+@keyframes fallAndFade {
+    0% {
+        transform: translate(-50%, -50%) rotate(var(--rotation)) scale(0.5);
+        opacity: 0.8;
+    }
+
+    10% {
+        transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1.2);
+    }
+
+    100% {
+        transform: translate(calc(-50% + var(--drift)), 150px) rotate(calc(var(--rotation) + 240deg)) scale(0);
+        opacity: 0;
+    }
+}

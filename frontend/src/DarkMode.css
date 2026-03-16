@@ -26,6 +26,26 @@ body.dark-mode .app {
   color: #fff;
 }
 
+body.dark-mode header {
+  color: #fff;
+}
+
+body.dark-mode header h1,
+body.dark-mode header p {
+  color: #fff;
+}
+
+body.dark-mode .logout-btn {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .logout-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
 body.dark-mode form,
 body.dark-mode .response {
   background: #2a2a3e;
@@ -42,4 +62,38 @@ body.dark-mode input[type="file"] {
 
 body.dark-mode .response h2 {
   color: #8b9aff;
+}
+
+body.dark-mode .dashboard-top {
+  background: #2a2a3e;
+  border: 1px solid #444;
+}
+
+body.dark-mode .dashboard-header h3 {
+  color: #fff;
+}
+
+body.dark-mode .dashboard-header {
+  border-bottom-color: #444;
+}
+
+body.dark-mode .close-btn {
+  background: #333;
+  color: #fff;
+}
+
+body.dark-mode .close-btn:hover {
+  background: #444;
+}
+
+body.dark-mode .history-grid-item {
+  background: #333;
+}
+
+body.dark-mode .history-grid-item:hover {
+  background: #444;
+}
+
+body.dark-mode .history-grid-doubt {
+  color: #fff;
 }
